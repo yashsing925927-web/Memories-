@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f8eee9">
+
+<title>A Little World of Us ♡</title>
+
+<style>
+:root {
+  --cream: #fff8f3;
+  --pink: #efd5da;
+  --rose: #c98f9a;
+  --sage: #bdc9b4;
+  --green: #687d67;
+  --text: #675450;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--text);
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+button {
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 12px 19px;
+  border: 1px solid #dfc0bf;
+  border-radius: 28px;
+  background: #fffdf9;
+  color: var(--text);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:active {
+  transform: scale(.98);
+}
+
+.primary {
+  background: var(--pink);
+  border-color: var(--pink);
+}
+
+.cover {
+  min-height: 100svh;
+  padding: 28px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  background:
+    radial-gradient(
+      circle at 12% 15%,
+      #f0d9dd 0,
+      transparent 36%
+    ),
+    radial-gradient(
+      circle at 88% 85%,
+      #dce5d5 0,
+      transparent 35%
+    ),
+    var(--cream);
+}
+
+.cover-decoration {
+  color: var(--rose);
+  font-size: 1.5rem;
+  letter-spacing: 10px;
+}
+
+.cover h1 {
+  font-size: clamp(2.4rem, 10vw, 4rem);
+  line-height: 1.18;
+  font-weight: normal;
+  margin: 22px 0 12px;
+}
+
+.cover p {
+  max-width: 330px;
+  font-size: 1rem;
+  line-height: 1.9;
+}
+
+.cover .primary {
+  margin-top: 20px;
+}
+
+#musicStatus {
+  min-height: 24px;
+  font-size: .85rem;
+  color: var(--green);
+}
+
+.scrapbook {
+  display: none;
+  min-height: 100svh;
+  padding: 18px 12px 28px;
+}
+
+.page {
+  display: none;
+  max-width: 760px;
+  margin: 0 auto;
+  animation: fadeIn .35s ease;
+}
+
+.page.active {
+  display: block;
+}
+
+.page img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 2px;
+}
+
+.image-fallback {
+  display: none;
+  padding: 35px 15px;
+  margin: 10px auto;
+  text-align: center;
+  line-height: 1.8;
+  background: #fffdf9;
+  border: 1px dashed #cdb5ad;
+  border-radius: 8px;
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin: 22px auto 12px;
+}
+
+.page-count {
+  text-align: center;
+  color: var(--green);
+  font-size: .78rem;
+  letter-spacing: 3px;
+  margin: 15px 0;
+}
+
+.music-toggle {
+  display: block;
+  margin: 15px auto;
+  background: transparent;
+}
+
+.cover-toggle {
+  display: block;
+  margin: 12px auto;
+  border: none;
+  background: transparent;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (min-width: 700px) {
+  .scrapbook {
+    padding: 30px 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page {
+    animation: none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- WELCOME SCREEN -->
+
+<section class="cover" id="cover">
+
+  <div class="cover-decoration">♡ ✧ ♡</div>
+
+  <p>A tiny collection of moments</p>
+
+  <h1>
+    A little world,<br>
+    just for you ♡
+  </h1>
+
+  <p>
+    Three little pages, a thousand little feelings,
+    and memories that mean the world to me.
+  </p>
+
+  <button
+    class="primary"
+    id="musicButton"
+    onclick="beginScrapbook()">
+    ♫ Play our melody ♡
+  </button>
+
+  <p id="musicStatus" aria-live="polite"></p>
+
+</section>
+
+<!-- MUSIC PLAYER -->
+
+<audio id="melody" loop preload="auto">
+  <source src="our_little_melody.wav" type="audio/wav">
+</audio>
+
+<!-- SCRAPBOOK -->
+
+<main class="scrapbook" id="scrapbook">
+
+  <!-- PAGE 1 -->
+
+  <section class="page active" id="page1">
+
+    <img
+      src="scrapbook1.png"
+      alt="Scrapbook page one: Our Little Memory Lane"
+      onerror="imageError(this, 'Page 1')">
+
+    <div class="image-fallback">
+      <strong>Page 1 image not found ♡</strong>
+      <br>
+      Upload the file named scrapbook1.png
+      to the root of your GitHub repository.
+    </div>
+
+  </section>
+
+  <!-- PAGE 2 -->
+
+  <section class="page" id="page2">
+
+    <img
+      src="scrapbook2.png"
+      alt="Scrapbook page two: Our Little Nicknames"
+      onerror="imageError(this, 'Page 2')">
+
+    <div class="image-fallback">
+      <strong>Page 2 image not found ♡</strong>
+      <br>
+      Upload the file named scrapbook2.png
+      to the root of your GitHub repository.
+    </div>
+
+  </section>
+
+  <!-- PAGE 3 -->
+
+  <section class="page" id="page3">
+
+    <img
+      src="scrapbook3.png"
+      alt="Scrapbook page three: The Little Things"
+      onerror="imageError(this, 'Page 3')">
+
+    <div class="image-fallback">
+      <strong>Page 3 image not found ♡</strong>
+      <br>
+      Upload the file named scrapbook3.png
+      to the root of your GitHub repository.
+    </div>
+
+  </section>
+
+  <!-- PAGE NAVIGATION -->
+
+  <nav class="navigation" aria-label="Scrapbook pages">
+
+    <button
+      id="previousButton"
+      onclick="changePage(-1)">
+      ← Previous
+    </button>
+
+    <button
+      class="primary"
+      id="nextButton"
+      onclick="changePage(1)">
+      Next page →
+    </button>
+
+  </nav>
+
+  <p class="page-count" id="pageCount">
+    PAGE 1 OF 3
+  </p>
+
+  <button
+    class="music-toggle"
+    id="musicToggle"
+    onclick="toggleMusic()">
+    ♫ Pause our melody
+  </button>
+
+  <button
+    class="cover-toggle"
+    onclick="backToCover()">
+    Return to the cover ♡
+  </button>
+
+</main>
+
+<script>
+let currentPage = 1;
+
+const melody = document.getElementById("melody");
+const musicButton = document.getElementById("musicButton");
+const musicToggle = document.getElementById("musicToggle");
+const musicStatus = document.getElementById("musicStatus");
+
+function imageError(img, label) {
+  img.style.display = "none";
+
+  const fallback = img.nextElementSibling;
+
+  if (fallback) {
+    fallback.style.display = "block";
+  }
+
+  console.warn(label + " image could not be loaded.");
+}
+
+async function beginScrapbook() {
+  // Open the first page immediately after her tap.
+  document.getElementById("cover").style.display = "none";
+  document.getElementById("scrapbook").style.display = "block";
+
+  showPage(1);
+
+  // Start the melody from the same button tap.
+  try {
+    await melody.play();
+
+    musicButton.textContent = "♫ Our melody is playing ♡";
+    musicToggle.textContent = "♫ Pause our melody";
+    musicStatus.textContent = "A little melody, just for you ♡";
+
+  } catch (error) {
+    musicStatus.textContent =
+      "Your scrapbook is open! Check the music file and try the music button below.";
+
+    musicToggle.textContent = "♫ Play our melody";
+  }
+
+  window.scrollTo(0, 0);
+}
+
+async function toggleMusic() {
+  if (melody.paused) {
+    try {
+      await melody.play();
+
+      musicButton.textContent = "♫ Our melody is playing ♡";
+      musicToggle.textContent = "♫ Pause our melody";
+      musicStatus.textContent = "A little melody, just for you ♡";
+
+    } catch (error) {
+      musicStatus.textContent =
+        "The melody could not start. Check the uploaded audio file.";
+    }
+
+  } else {
+    melody.pause();
+
+    musicButton.textContent = "♫ Play our melody ♡";
+    musicToggle.textContent = "♫ Play our melody";
+    musicStatus.textContent = "Melody paused ♡";
+  }
+}
+
+function showPage(number) {
+  currentPage = number;
+
+  document.querySelectorAll(".page").forEach(function(page) {
+    page.classList.remove("active");
+  });
+
+  document.getElementById("page" + number).classList.add("active");
+
+  document.getElementById("pageCount").textContent =
+    "PAGE " + number + " OF 3";
+
+  document.getElementById("previousButton").style.visibility =
+    number === 1 ? "hidden" : "visible";
+
+  document.getElementById("nextButton").textContent =
+    number === 3 ? "Back to page 1 ↺" : "Next page →";
+
+  window.scrollTo(0, 0);
+}
+
+function changePage(direction) {
+  if (direction === 1 && currentPage === 3) {
+    showPage(1);
+    return;
+  }
+
+  const next = currentPage + direction;
+
+  if (next >= 1 && next <= 3) {
+    showPage(next);
+  }
+}
+
+function backToCover() {
+  document.getElementById("scrapbook").style.display = "none";
+  document.getElementById("cover").style.display = "flex";
+
+  window.scrollTo(0, 0);
+}
+</script>
+
+</body>
+</html>
