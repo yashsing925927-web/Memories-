@@ -1,536 +1,420 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>A Little World of Us ♡</title>
+  <title>A Little World of Us ♡</title>
 
-<style>
-:root {
-  --blush: #fff0f2;
-  --pink: #f5cbd2;
-  --dusty: #c77f91;
-  --deep: #895664;
-  --cream: #fffaf7;
-  --text: #684d53;
-}
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-* {
-  box-sizing: border-box;
-}
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Georgia, "Times New Roman", serif;
+      color: #674c53;
+      background: linear-gradient(
+        135deg,
+        #fff7f8,
+        #fce8ed,
+        #fff3f5
+      );
+      text-align: center;
+    }
 
-body {
-  margin: 0;
-  min-height: 100vh;
-  color: var(--text);
-  font-family: Georgia, "Times New Roman", serif;
-  background:
-    radial-gradient(ellipse at top left, #ffe2e8 0%, transparent 45%),
-    radial-gradient(ellipse at bottom right, #f9dce2 0%, transparent 45%),
-    var(--blush);
-  background-attachment: fixed;
-}
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-button {
-  font: inherit;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
+    .cover {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 25px;
+    }
 
-.screen {
-  display: none;
-  min-height: 100vh;
-  padding: 28px 16px;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
+    .cover-card {
+      width: 100%;
+      max-width: 430px;
+      padding: 38px 24px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid #f3d4dd;
+      border-radius: 28px;
+      box-shadow: 0 12px 35px rgba(160, 105, 125, 0.12);
+    }
 
-.screen.active {
-  display: flex;
-}
+    .little-heart {
+      font-size: 35px;
+      margin-bottom: 12px;
+      color: #d58b9f;
+    }
 
-/* WELCOME PAGE */
+    h1 {
+      font-size: clamp(29px, 7vw, 39px);
+      line-height: 1.25;
+      font-weight: normal;
+      margin: 8px 0 22px;
+    }
 
-.cover-card {
-  width: 100%;
-  max-width: 440px;
-  padding: 38px 25px;
-  text-align: center;
-  background: rgba(255, 250, 247, 0.85);
-  border: 1px solid #f4d6dc;
-  border-radius: 25px;
-  box-shadow: 0 12px 35px rgba(166, 102, 119, 0.12);
-  position: relative;
-  overflow: hidden;
-}
+    .intro-text {
+      font-size: 17px;
+      line-height: 1.9;
+      color: #846b72;
+      margin-bottom: 28px;
+    }
 
-.cover-card::before {
-  content: "♡";
-  position: absolute;
-  top: 8px;
-  right: 18px;
-  font-size: 35px;
-  color: #e6b0bc;
-  opacity: 0.7;
-}
+    .main-button,
+    .nav-button,
+    .music-button {
+      border: 1px solid #e9bac9;
+      border-radius: 30px;
+      background: #f9e1e8;
+      color: #76515d;
+      padding: 12px 20px;
+      font-size: 15px;
+      transition: 0.2s ease;
+    }
 
-.cover-card::after {
-  content: "♡";
-  position: absolute;
-  bottom: 8px;
-  left: 18px;
-  font-size: 30px;
-  color: #e6b0bc;
-  opacity: 0.7;
-}
+    .main-button:hover,
+    .nav-button:hover,
+    .music-button:hover {
+      background: #f4d1dc;
+      transform: translateY(-2px);
+    }
 
-.eyebrow {
-  font-family: Arial, sans-serif;
-  font-size: 11px;
-  letter-spacing: 3px;
-  color: var(--dusty);
-  margin-bottom: 17px;
-}
+    .small-note {
+      margin-top: 22px;
+      font-size: 13px;
+      color: #a4878f;
+    }
 
-h1 {
-  font-size: clamp(29px, 7vw, 39px);
-  font-weight: normal;
-  line-height: 1.25;
-  margin: 0 0 23px;
-  color: var(--deep);
-}
+    .scrapbook {
+      min-height: 100vh;
+      padding: 24px 14px 35px;
+      display: none;
+    }
 
-.cover-message {
-  font-size: 17px;
-  line-height: 1.9;
-  margin: 0;
-}
+    .top-heading {
+      font-size: 29px;
+      font-weight: normal;
+      margin: 8px 0 8px;
+    }
 
-.cover-note {
-  font-size: 15px;
-  line-height: 1.8;
-  margin: 22px 0;
-  color: #a16d7b;
-  font-style: italic;
-}
+    .subtitle {
+      font-size: 14px;
+      color: #a1818b;
+      margin: 0 0 22px;
+    }
 
-.heart-divider {
-  color: var(--dusty);
-  letter-spacing: 7px;
-  margin: 20px 0;
-}
+    .page-frame {
+      width: 100%;
+      max-width: 650px;
+      margin: 0 auto;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid #f0d1da;
+      border-radius: 18px;
+      box-shadow: 0 10px 28px rgba(160, 105, 125, 0.12);
+    }
 
-.primary-button {
-  border: none;
-  border-radius: 30px;
-  background: linear-gradient(135deg, #e9b8c4, #d994a5);
-  color: #fffaf8;
-  padding: 15px 24px;
-  font-size: 15px;
-  box-shadow: 0 5px 15px rgba(183, 111, 131, 0.2);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
+    .scrapbook-image {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      object-fit: contain;
+    }
 
-.primary-button:active {
-  transform: scale(0.97);
-}
+    .page-counter {
+      margin: 20px 0;
+      font-size: 15px;
+      color: #98747f;
+      letter-spacing: 1px;
+    }
 
-.cover-footer {
-  margin-top: 23px;
-  font-size: 12px;
-  color: #b48b94;
-  letter-spacing: 1px;
-}
+    .navigation {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 18px auto;
+    }
 
-/* SCRAPBOOK PAGES */
+    .nav-button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none;
+    }
 
-.scrapbook-heading {
-  text-align: center;
-  margin: 0 0 18px;
-}
+    .music-button {
+      margin: 6px;
+      background: rgba(255, 255, 255, 0.7);
+    }
 
-.scrapbook-heading h2 {
-  font-size: clamp(24px, 6vw, 32px);
-  font-weight: normal;
-  color: var(--deep);
-  margin: 0 0 8px;
-}
+    .back-button {
+      display: block;
+      margin: 16px auto 0;
+      background: transparent;
+      border: none;
+      color: #9c7c85;
+      font-size: 14px;
+      padding: 10px;
+    }
 
-.scrapbook-heading p {
-  font-size: 13px;
-  color: #a57a84;
-  margin: 0;
-}
+    .bottom-heart {
+      color: #d59aaa;
+      font-size: 18px;
+      margin-top: 24px;
+    }
 
-.page-frame {
-  width: 100%;
-  max-width: 680px;
-  padding: 10px;
-  background: rgba(255, 250, 247, 0.8);
-  border: 1px solid #f0d1d8;
-  border-radius: 18px;
-  box-shadow: 0 10px 28px rgba(166, 102, 119, 0.12);
-}
+    @media (max-width: 400px) {
+      .cover-card {
+        padding: 30px 18px;
+      }
 
-.page-image {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-height: 65vh;
-  object-fit: contain;
-  border-radius: 10px;
-}
+      .intro-text {
+        font-size: 16px;
+      }
 
-.page-image[hidden] {
-  display: none;
-}
-
-.image-error {
-  padding: 35px 12px;
-  text-align: center;
-  line-height: 1.8;
-  font-size: 15px;
-  color: var(--deep);
-}
-
-.image-error[hidden] {
-  display: none;
-}
-
-/* NAVIGATION */
-
-.navigation {
-  width: 100%;
-  max-width: 520px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.nav-button {
-  border: 1px solid #e8bdc7;
-  background: rgba(255, 250, 247, 0.85);
-  color: var(--deep);
-  padding: 11px 17px;
-  border-radius: 25px;
-  font-size: 13px;
-  box-shadow: 0 3px 10px rgba(166, 102, 119, 0.07);
-}
-
-.nav-button:disabled {
-  opacity: 0.4;
-  cursor: default;
-}
-
-.page-count {
-  font-size: 13px;
-  white-space: nowrap;
-  color: #a36e7c;
-}
-
-.secondary-controls {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 16px;
-}
-
-.small-button {
-  border: none;
-  background: transparent;
-  color: #a16d7b;
-  padding: 9px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-}
-
-.small-button:active {
-  background: rgba(255, 255, 255, 0.6);
-}
-
-.music-status {
-  margin: 12px 0 0;
-  min-height: 18px;
-  text-align: center;
-  font-family: Arial, sans-serif;
-  font-size: 11px;
-  color: #a57a84;
-  line-height: 1.6;
-}
-
-@media (max-width: 380px) {
-  .cover-card {
-    padding: 32px 19px;
-  }
-
-  .cover-message {
-    font-size: 16px;
-  }
-
-  .nav-button {
-    padding: 10px 12px;
-  }
-}
-</style>
+      .nav-button {
+        padding: 11px 15px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- WELCOME SCREEN -->
-
-<section id="cover" class="screen active">
-
-  <div class="cover-card">
-
-    <div class="eyebrow">A LITTLE SOMETHING FOR YOU</div>
-
-    <h1>A Little World<br>of Us ♡</h1>
-
-    <p class="cover-message">
-      For the little moments,<br>
-      the silly memories,<br>
-      and all the little things<br>
-      that make our world special.
-    </p>
-
-    <div class="heart-divider">♡ · ♡ · ♡</div>
-
-    <p class="cover-note">
-      Some memories deserve<br>
-      a place of their own. 🌸
-    </p>
-
-    <button class="primary-button" id="startButton">
-      ♫ Play the melody ♫
-    </button>
-
-    <div class="cover-footer">
-      MADE WITH LOVE, ONE MEMORY AT A TIME
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- SCRAPBOOK SCREEN -->
-
-<section id="scrapbook" class="screen">
-
-  <header class="scrapbook-heading">
-    <h2 id="pageTitle">Our Little Memory Lane ♡</h2>
-    <p id="pageSubtitle">A few little pieces of our world</p>
-  </header>
-
-  <main class="page-frame">
-
-    <img
-      id="pageImage"
-      class="page-image"
-      src="scrapbook1.png"
-      alt="Scrapbook page 1"
+  <!-- Background piano music -->
+  <audio id="backgroundMusic" loop preload="auto">
+    <source
+      src="our_little_melody_soft.wav"
+      type="audio/wav"
     >
+  </audio>
 
-    <div id="imageError" class="image-error" hidden>
-      <strong>Oops, this page couldn't be loaded. ♡</strong>
-      <br>
-      Check that the image filename matches the code.
+  <!-- WELCOME SCREEN -->
+  <section class="cover" id="cover">
+    <div class="cover-card">
+
+      <div class="little-heart">♡</div>
+
+      <h1>A Little World of Us</h1>
+
+      <div class="intro-text">
+        For the little moments,<br>
+        the silly memories,<br>
+        and all the little things<br>
+        that make our world special.<br><br>
+
+        Some memories deserve<br>
+        a place of their own. 🌸
+      </div>
+
+      <button class="main-button" id="startButton">
+        ♫ Play the melody ♫
+      </button>
+
+      <div class="small-note">
+        A little scrapbook of memories ♡
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- SCRAPBOOK PAGES -->
+  <main class="scrapbook" id="scrapbook">
+
+    <h1 class="top-heading">Our Little Memories ♡</h1>
+
+    <p class="subtitle">
+      Little moments, kept somewhere special.
+    </p>
+
+    <div class="page-frame">
+      <img
+        id="scrapbookImage"
+        class="scrapbook-image"
+        src="Scrapbook1.png"
+        alt="Scrapbook memory"
+      >
     </div>
 
-  </main>
-
-  <nav class="navigation" aria-label="Scrapbook navigation">
-
-    <button id="prevButton" class="nav-button">
-      ← Previous
-    </button>
-
-    <span id="pageCount" class="page-count">
+    <div class="page-counter" id="pageCounter">
       ♡ 1 of 3 ♡
-    </span>
+    </div>
 
-    <button id="nextButton" class="nav-button">
-      Next →
-    </button>
+    <div class="navigation">
 
-  </nav>
+      <button
+        class="nav-button"
+        id="previousButton"
+        disabled
+      >
+        ← Previous
+      </button>
 
-  <div class="secondary-controls">
+      <button
+        class="nav-button"
+        id="nextButton"
+      >
+        Next →
+      </button>
 
-    <button id="musicButton" class="small-button">
+    </div>
+
+    <button class="music-button" id="musicButton">
       ♫ Pause music
     </button>
 
-    <button id="backButton" class="small-button">
-      ♡ Back to beginning
+    <button class="back-button" id="backButton">
+      ↶ Back to the beginning
     </button>
 
-  </div>
+    <div class="bottom-heart">♡</div>
 
-  <p id="musicStatus" class="music-status" aria-live="polite"></p>
-
-</section>
+  </main>
 
 
-<!-- BACKGROUND PIANO MUSIC -->
+  <script>
+    const cover = document.getElementById("cover");
+    const scrapbook = document.getElementById("scrapbook");
 
-<audio id="backgroundMusic" loop preload="auto">
-  <source src="our_little_melody.wav" type="audio/wav">
-</audio>
+    const music = document.getElementById("backgroundMusic");
 
+    // Keep the piano music soft.
+    music.volume = 0.15;
 
-<script>
-const pages = [
-  {
-    image: "scrapbook1.png",
-    title: "Our Little Memory Lane ♡",
-    subtitle: "A few little pieces of our world"
-  },
-  {
-    image: "scrapbook2.png",
-    title: "Our Little Nicknames ♡",
-    subtitle: "Little names, special meanings"
-  },
-  {
-    image: "scrapbook3.png",
-    title: "The Little Things ♡",
-    subtitle: "The ordinary things that mean so much"
-  }
-];
+    const startButton = document.getElementById("startButton");
+    const musicButton = document.getElementById("musicButton");
+    const backButton = document.getElementById("backButton");
 
-let currentPage = 0;
+    const image = document.getElementById("scrapbookImage");
+    const pageCounter = document.getElementById("pageCounter");
 
-const cover = document.getElementById("cover");
-const scrapbook = document.getElementById("scrapbook");
-const music = document.getElementById("backgroundMusic");
+    const previousButton = document.getElementById("previousButton");
+    const nextButton = document.getElementById("nextButton");
 
-const pageImage = document.getElementById("pageImage");
-const imageError = document.getElementById("imageError");
-const pageTitle = document.getElementById("pageTitle");
-const pageSubtitle = document.getElementById("pageSubtitle");
-const pageCount = document.getElementById("pageCount");
+    // IMPORTANT:
+    // These filenames must match the files in your GitHub repository.
+    const pages = [
+      "Scrapbook1.png",
+      "Scrapbook2.png",
+      "Scrapbook 3.png"
+    ];
 
-const prevButton = document.getElementById("prevButton");
-const nextButton = document.getElementById("nextButton");
-const musicButton = document.getElementById("musicButton");
-const musicStatus = document.getElementById("musicStatus");
+    let currentPage = 0;
 
+    // Start the music and open scrapbook page 1 together.
+    startButton.addEventListener("click", async function () {
 
-function showScreen(screen) {
-  cover.classList.remove("active");
-  scrapbook.classList.remove("active");
-  screen.classList.add("active");
-}
+      cover.style.display = "none";
+      scrapbook.style.display = "block";
 
+      currentPage = 0;
+      showPage();
 
-function displayPage(index) {
-  currentPage = index;
+      try {
+        await music.play();
+        musicButton.textContent = "♫ Pause music";
+      } catch (error) {
+        musicButton.textContent = "♫ Play music";
+        console.log("Music could not start:", error);
+      }
 
-  const page = pages[currentPage];
-
-  pageImage.hidden = true;
-  imageError.hidden = true;
-
-  pageImage.onload = function () {
-    pageImage.hidden = false;
-    imageError.hidden = true;
-  };
-
-  pageImage.onerror = function () {
-    pageImage.hidden = true;
-    imageError.hidden = false;
-  };
-
-  pageImage.alt = "Scrapbook page " + (currentPage + 1);
-  pageImage.src = page.image;
-
-  pageTitle.textContent = page.title;
-  pageSubtitle.textContent = page.subtitle;
-
-  pageCount.textContent =
-    "♡ " + (currentPage + 1) + " of " + pages.length + " ♡";
-
-  prevButton.disabled = currentPage === 0;
-  nextButton.disabled = currentPage === pages.length - 1;
-}
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    });
 
 
-async function startScrapbook() {
-  showScreen(scrapbook);
-  displayPage(0);
+    // Display the selected scrapbook page.
+    function showPage() {
+      image.src = pages[currentPage];
 
-  musicStatus.textContent = "Starting the piano music…";
+      pageCounter.textContent =
+        "♡ " + (currentPage + 1) + " of " + pages.length + " ♡";
 
-  try {
-    await music.play();
+      previousButton.disabled = currentPage === 0;
 
-    musicButton.textContent = "♫ Pause music";
-    musicStatus.textContent = "A little piano in the background ♡";
-
-  } catch (error) {
-    musicButton.textContent = "♫ Play music";
-
-    musicStatus.textContent =
-      "The scrapbook is ready, but the music couldn't start. " +
-      "Check that the audio file is uploaded.";
-  }
-}
-
-
-prevButton.addEventListener("click", function () {
-  if (currentPage > 0) {
-    displayPage(currentPage - 1);
-  }
-});
-
-
-nextButton.addEventListener("click", function () {
-  if (currentPage < pages.length - 1) {
-    displayPage(currentPage + 1);
-  }
-});
-
-
-document.getElementById("startButton")
-  .addEventListener("click", startScrapbook);
-
-
-musicButton.addEventListener("click", async function () {
-  if (music.paused) {
-    try {
-      await music.play();
-
-      musicButton.textContent = "♫ Pause music";
-      musicStatus.textContent = "A little piano in the background ♡";
-
-    } catch (error) {
-      musicStatus.textContent =
-        "Couldn't play the music. Please check the audio file.";
+      nextButton.disabled =
+        currentPage === pages.length - 1;
     }
 
-  } else {
-    music.pause();
 
-    musicButton.textContent = "♫ Play music";
-    musicStatus.textContent = "Music paused ♡";
-  }
-});
+    // Previous page.
+    previousButton.addEventListener("click", function () {
+      if (currentPage > 0) {
+        currentPage--;
+        showPage();
+
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      }
+    });
 
 
-document.getElementById("backButton")
-  .addEventListener("click", function () {
-    showScreen(cover);
-  });
+    // Next page.
+    nextButton.addEventListener("click", function () {
+      if (currentPage < pages.length - 1) {
+        currentPage++;
+        showPage();
+
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      }
+    });
 
 
-// Prepare the first page.
-displayPage(0);
-</script>
+    // Play or pause the piano music.
+    musicButton.addEventListener("click", async function () {
+
+      if (music.paused) {
+        try {
+          await music.play();
+          musicButton.textContent = "♫ Pause music";
+        } catch (error) {
+          musicButton.textContent = "♫ Play music";
+        }
+      } else {
+        music.pause();
+        musicButton.textContent = "♫ Play music";
+      }
+
+    });
+
+
+    // Return to the welcome screen.
+    backButton.addEventListener("click", function () {
+      scrapbook.style.display = "none";
+      cover.style.display = "flex";
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    });
+
+
+    // If the music finishes or is paused, keep the button label sensible.
+    music.addEventListener("ended", function () {
+      musicButton.textContent = "♫ Play music";
+    });
+
+  </script>
 
 </body>
 </html>
